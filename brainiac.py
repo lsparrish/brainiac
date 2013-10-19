@@ -4,17 +4,17 @@ import hashlib, sys, base58
 Use at your own discretion. (Diceware strongly recommended.)'''
 
 default_rounds = 1024
-def derivekey(passphrase,rounds=default_rounds):
+def derivekey(passphrase,rounds=default_rounds,quiet=False):
     if not quiet:
         print str(rounds)+' rounds = '+str(256/8*rounds)+' bytes'
     def getdigest(message):
-        return hashlib.sha256(x).digest()
+        return hashlib.sha256(message).digest()
     message=getdigest(passphrase)
     for i in range(rounds):
         result=getdigest(message)
         message=result+message
         if not quiet and i % 1024 == 0: sys.stdout.write('.');sys.stdout.flush()
-    return result,data
+    return result,message
 
 def keep(data,filename='output'):
     f=open(filename,'w')
